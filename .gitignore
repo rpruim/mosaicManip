@@ -11,6 +11,7 @@
 *.ilg
 *.log
 builds/*gz
+mosaicManip_*gz
 *.Rcheck
 man/*.Rd
 data/*.csv.bz2
