@@ -5,7 +5,7 @@
 #' 
 #' @name undocumented
 #' @rdname undocumented
-#' @aliases mEulerIntegrate mGlassPattern mGradSearch mLM mLinAlgebra mLineFit
+#' @aliases mEulerIntegrate mGlassPattern mGradSearch mLM mLinAlgebra 
 #' mPhaseLine mhistogram mpoly2
 #' @author Randall Pruim, Daniel Kaplan
 #' 

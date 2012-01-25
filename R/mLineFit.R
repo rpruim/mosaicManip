@@ -11,7 +11,7 @@
 #' 
 #' @author Daniel Kaplan (\email{kaplan@@macalester.edu})
 #'
-#' @param formula a model formula with a single, quantitative explanatory variable
+#' @param form a model formula with a single, quantitative explanatory variable
 #' @param data  data frame containing the data for fitting
 #'
 #' @return nothing
