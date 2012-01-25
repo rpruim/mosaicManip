@@ -8,8 +8,7 @@ and graphs of various sorts.
 At the moment, this code will only work in RStudio.
 
 ===News===
-* 2012-01-24: Project MOSAIC migrates its mosaicManip R package from R-forge to github.  
-Simultaneously, we are converting to roxygen documentation.  (Wish us luck in the transition.)
+* 2012-01-24: Project MOSAIC migrates its mosaicManip R package from R-forge to github.  Simultaneously, we are converting to roxygen documentation.  (Wish us luck in the transition.)
 
 ==Project MOSAIC==
 Project MOSAIC is a community of educators working to develop a new way to
