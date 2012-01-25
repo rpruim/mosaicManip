@@ -1,4 +1,0 @@
-
-importFrom(utils, head, modifyList)
-
-exportPattern("^[^\\.]") 
