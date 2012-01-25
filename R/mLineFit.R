@@ -68,8 +68,8 @@
 mLineFit <- function(form, data){  
 	f <- .mLineFitHelper( form, data)
 	manipulate( f(slope,inter,resids,squares), 
-			   inter <- slider(-3,3,initial=0,step=.05,ticks=FALSE,label="Intercept Offset"),
-			   slope <- slider(-1,2,initial=1,step=.05,ticks=FALSE,label="Slope Multiplier"),
-			   resids <- checkbox(FALSE,label="Show Residuals"),
-			   squares <- checkbox(FALSE,label="Square resids"))
+			   inter = slider(-3,3,initial=0,step=.05,ticks=FALSE,label="Intercept Offset"),
+			   slope = slider(-1,2,initial=1,step=.05,ticks=FALSE,label="Slope Multiplier"),
+			   resids = checkbox(FALSE,label="Show Residuals"),
+			   squares = checkbox(FALSE,label="Square resids"))
 }
