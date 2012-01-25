@@ -1,0 +1,13 @@
+^sandbox$
+^bin$
+^builds$
+^\.Rproj\.user$
+^\.Rd2dvi.*$
+^.*\.csv\.bz2.*$
+^.*\.swp$
+^.*\.swo$
+^\.git
+^.*bk$
+^.*~$
+^README\.mediawiki$
+^mosaicManip_.*\.gz$
