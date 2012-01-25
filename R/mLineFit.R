@@ -1,4 +1,29 @@
-# Interactive line-fitting application
+#' Interactive line-fitting application
+#' 
+#' An interactive demonstration program for showing how the residuals
+#' and the sum of square residuals relates to the slope and intercept of a fitted
+#' line.  There are sliders to modify the slope and intercept of the fitted
+#' line and checkboxes that control whether to display the residuals (as lines)
+#' or the sum of square residuals (as filled boxes).  The numerical value
+#' of the sum of square residuals is always shown.  By modifying the slope and intercept,
+#' you can see how the sum of square residuals increases compared to the 
+#' optimal, least squares value.
+#' 
+#' @author Daniel Kaplan (\email{kaplan@@macalester.edu})
+#'
+#' @param formula a model formula with a single, quantitative explanatory variable
+#' @param data  data frame containing the data for fitting
+#'
+#' @return nothing
+#' @examples
+#' 
+#' \dontrun{
+#' kids = fetchData("kidsfeet.csv")
+#' mLineFit( length ~ width, data=kids )
+#' }
+
+mLineFit <- function(form, data){
+  # define a helper function internally
 .mLineFitHelper <- function(formula, data=NULL,...){
 	if( !require(manipulate) ) 
 		stop("Must use a manipulate-compatible version of R, e.g. RStudio")
@@ -21,7 +46,7 @@
 	slopeRange <- sort(coef(mod)[2]*c(-1,1.5))
 	curSlope <- 1;
 
-	showPlot <- function(){
+	showPlot <- function(curSlope,curIntercept,showResids,showSquares){
 		modelVals <- curSlope*(explanatory-mx) + (curIntercept+my)
 		plot( explanatory, response,
 			 ylab=responseName,
@@ -59,13 +84,14 @@
 		curIntercept  <-  inter
 		showResids <-  resids
 		showSquares <-  squares
-		showPlot()
+		showPlot(curSlope,curIntercept,showResids,showSquares)
 	}
 	return(doPlot)
 }
 
+# ==================
+# The manipulate action
 
-mLineFit <- function(form, data){  
 	f <- .mLineFitHelper( form, data)
 	manipulate( f(slope,inter,resids,squares), 
 			   inter = slider(-3,3,initial=0,step=.05,ticks=FALSE,label="Intercept Offset"),
