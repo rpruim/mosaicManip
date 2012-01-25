@@ -1,5 +1,40 @@
 # Phase-Plane Software
 # revise should be a push-button
+
+
+#' Interactive applet for differential equation modeling.
+#' 
+#' Displays a phase plane of two variables and their phase portraits against
+#' \code{t}
+#' 
+#' Sliders control the initial conditions of both variables. The trajectory
+#' picker allows the user to edit a new trajectory, saving the previous one to
+#' compare against. The trajectory duration and go back in time sliders control
+#' the duration of the time the system is allowed to run for, forwards and
+#' backwards in time. Show Nullclines checkbox displays the nullclines as
+#' transparent polygons on the phase plane. Revise DE allows the user to edit
+#' the differential equation for one trajectory at a time. If the DEs are
+#' different, the plot flow picker allows the user to display the arrow field
+#' of the desired trajectory. The Jacobian picker prints the Jacobian matrix
+#' and its eigenvalues at the initial point, at the end of the duration, or at
+#' the beginning of the duration. The parameter sliders are currently
+#' nonfunctional.
+#' 
+#' @param DE A function object containing the differential equation to be
+#' solved.
+#' @param xlim The boundaries of the x axis in the phase plane.
+#' @param ylim The boundaries of the y axis in the phase plane.
+#' @return A function that implements and displays the current state of the
+#' variables in the DE at many points in time.
+#' @author Andrew Rich (\email{andrew.joseph.rich@@gmail.com}) and Daniel
+#' Kaplan (\email{kaplan@@macalester.edu})
+#' @keywords differential equations
+#' @examples
+#' 
+#' 	if(require(manipulate)){
+#' 		mPP(DE=predator.prey)
+#' 	}
+#' 
 mPP <- function( DE=predator.prey, xlim=c(-10,2000),ylim=c(-10,2000)) {
 	if( !require(manipulate) ) 
 		stop("Must use a manipulate-compatible version of R, e.g. RStudio")

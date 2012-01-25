@@ -1,3 +1,23 @@
+#' Interactive display for hypothesis testing concepts.
+#' 
+#' Displays a sampling distribution and calculates power.
+#' 
+#' Allows the user to set various parameters that govern the sampling
+#' distribution, and the significance, then calculates the power.  Displays all
+#' this graphically.
+#' 
+#' @param useF Show the F distribution.  Default: a t-distribution for the
+#' sample statistic.
+#' @return Just the graphics as a side effect.
+#' @author Daniel Kaplan (\email{kaplan@@macalester.edu})
+#' @keywords statistics
+#' @examples
+#' 
+#' 	if(require(manipulate)){
+#' 		mHypTest()
+#' 		mHypTest(useF=TRUE)
+#' 	}
+#' 
 mHypTest <-
 function(useF=FALSE){
   if( !require(manipulate) ) 

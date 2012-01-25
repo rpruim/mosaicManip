@@ -1,3 +1,12 @@
+#' Interactive Applet to Examine Taylor and Least Squares Approximations
+#' 
+#' This applet displays a plot of a function, its Taylor series approximation,
+#' and a least squres approximation.
+#' 
+#' 
+#' @param expr a mathematical expression. See mosaic \code{D}.
+#' @param xlim The range of the dependent variable.
+#' @param \dots Additional arguments to \code{expr}.
 mTaylor <- function(expr, xlim = c(-5, 5), ...){
 	# packages
     if( !require(manipulate) ) 
