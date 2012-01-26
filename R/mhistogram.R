@@ -1,9 +1,10 @@
 
-mhistogram <- function(..., n=12, nint=n) {
+mhistogram <- function(..., center=1, width=1) {
 	if ( require(manipulate) ) {
 		manipulate(
-			xhistogram( ..., nint = N, fit=FIT ),
-			N = slider( 3, 50, initial=nint ),
+			xhistogram( ..., fit=FIT, center=CENTER, width=WIDTH ),
+			CENTER = slider( 0, 5*center, initial=center, step=center/20 ),
+      WIDTH = slider(width/20, 10*width, initial=width, step=width/20),
 			FIT = picker( none=NULL, 
 						 normal="normal", 
 						 "log-normal" = "log-normal",
@@ -13,7 +14,7 @@ mhistogram <- function(..., n=12, nint=n) {
 		)
 	}
 	else {
-		histogram(..., nint=nint)
+		xhistogram(..., center=center, width=width)
 	}
 }
 
