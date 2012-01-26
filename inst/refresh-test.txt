@@ -1,2 +1,0 @@
-This file is here to test the file pane refresh in RStudio when switching 
-branches.
