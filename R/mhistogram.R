@@ -24,14 +24,16 @@
 #' @seealso \code{\link{xhistogram}}
 #' 
 #' @examples
+#' ## Not run:
 #' mhistogram( ~ eruptions, data=faithful, center=3, width=0.3)
 #' mhistogram( ~ age | substance, data=HELPrct, center=45, width=5)
+#' ## End (not run)
 
 mhistogram <- function(..., width=1, center=NULL, fit=FALSE) {
 	if ( require(manipulate) ) {
 		manipulate(
 			xhistogram( ..., fit=FIT, center=CENTER, width=WIDTH ),
-			CENTER = slider( 0, width, initial=0, step=width/40 ),
+			CENTER = slider( 0, width, initial=0, step=width/50 ),
       		WIDTH = slider(width/20, 10*width, initial=width, step=width/20),
 			FIT = picker( none=NULL, 
 						 normal="normal", 
