@@ -1,7 +1,14 @@
 # Game for finding local extrema
 mGradSearch <- function(fun=NULL,seed=NULL){
+  if( ! require(mosaic))
+    stop("Must install mosaic package.")
 	if( !require(manipulate) ) 
 		stop("Must use a manipulate-compatible version of R, e.g. RStudio")
+
+  if( is.null(fun)) {
+    if( is.null(seed)) seed <- round(runif(1,min=1,max=100000))
+    fun <- rfun( ~x&y, seed=seed)
+  }
 	tryCatch( .mGradSearch.core(fun=fun, seed=seed), 
 			 error=function(e){ 
 				 stop(paste(e,"Need newer version of RStudio", collapse="\n"))
@@ -10,18 +17,17 @@ mGradSearch <- function(fun=NULL,seed=NULL){
 }
 
 .mGradSearch.core <- function(fun=NULL,seed=NULL){
-	.requireManipulate()
-	if( !is.null(seed)) set.seed(seed)
-	if( is.null(fun)) fun<-rfun()
-	.global.fun <<-fun
-	gfunx <- D( .global.fun(x,y)~x)
-	gfuny <- D( .global.fun(x,y)~y)
-	dirD <- D(.global.fun(x+cos(theta)*s,y+sin(theta)*s)~s,theta=0)
-	dirD2 <- D( .global.fun(x+cos(theta)*s,y+sin(theta)*s)~s&s,
+	#.requireManipulate()
+	#if( !is.null(seed)) set.seed(seed)
+	#if( is.null(fun)) fun<-rfun()
+	gfunx <- D( fun(x,y)~x)
+	gfuny <- D( fun(x,y)~y)
+	dirD <- D(fun(x+cos(theta)*s,y+sin(theta)*s)~s,theta=0)
+	dirD2 <- D(fun(x+cos(theta)*s,y+sin(theta)*s)~s&s,
 			   theta=0)
-	gfunxx <- D( .global.fun(x=x,y=y)~x&x)
-	gfunyy <- D( .global.fun(x=x,y=y)~y&y)
-	gfunxy <- D( .global.fun(x=x,y=y)~x&y)
+	gfunxx <- D( fun(x=x,y=y)~x&x)
+	gfunyy <- D( fun(x=x,y=y)~y&y)
+	gfunxy <- D( fun(x=x,y=y)~x&y)
 
 	# ====== The State
 	ptsX <<- c(); ptsY <<- c()
@@ -32,12 +38,11 @@ mGradSearch <- function(fun=NULL,seed=NULL){
 			if (length(ptsX)>0)
 				centerpt <<- c(ptsX[length(ptsX)],ptsY[length(ptsY)])
 		}
-		plotFun( .global.fun(x,y)~x&y, 
-				xlim=scale*c(-1,1) + centerpt[1],
-				ylim=scale*c(-1,1) + centerpt[2],
-				transparency=trans,
-				col=ifelse(contours,"black", "white")
-				)
+      x = seq(-scale+centerpt[1],scale+centerpt[1],length=50)
+		  y = seq(-scale+centerpt[2],scale+centerpt[2],length=50)
+      z = outer(x,y,fun)
+      contour(x,y,z,col=ifelse(contours,rgb(0,0,0,min(1,trans+.1)),"white"))
+      if(contours & trans>0) image(x,y,z,add=TRUE, col=topo.colors(10,alpha=trans))
 		if( history ){
 			ptsX<<-ptsX[length(ptsX)]; ptsY<<-ptsY[length(ptsY)]
 		}
@@ -48,7 +53,7 @@ mGradSearch <- function(fun=NULL,seed=NULL){
 		}
 		if( length(ptsX)>0){
 			text(ptsX,ptsY,signif(fun(ptsX,ptsY),3),pos=3)
-			points( ptsX,ptsY,pch=20)
+			points(ptsX,ptsY,pch=20)
 			for(k in c(length(ptsX))){
 				gx <- gfunx( x=ptsX[k],y=ptsY[k])
 				gy <- gfuny( x=ptsX[k],y=ptsY[k])
@@ -61,8 +66,8 @@ mGradSearch <- function(fun=NULL,seed=NULL){
 				# ============ Newton step in 2-D
 				grad <- rbind(gx,gy)
 				dxx <- gfunxx(x=ptsX[k],y=ptsY[k])
-				dyy <- gfunxx(x=ptsX[k],y=ptsY[k])
-				dxy <- gfunxy(x=ptsX[k],y=ptsY[k])
+				dyy <- gfunyy(x=ptsX[k],y=ptsY[k])
+				dxy <- 0 # gfunxy(x=ptsX[k],y=ptsY[k])  FIX THIS.
 				H <- rbind( cbind(dxx,dxy),cbind(dxy,dyy))
 				real.step <- solve(H,-grad)
 
@@ -83,7 +88,6 @@ mGradSearch <- function(fun=NULL,seed=NULL){
 				}
 			}
 		}
-
 
 	}
 	# ===============
