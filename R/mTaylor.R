@@ -13,8 +13,7 @@ mTaylor <- function(expr, xlim = c(-5, 5), ...){
 		stop("Must use a manipulate-compatible version of R, e.g. RStudio")
 	# functions
 	vals <- list(...)
-	fm <- mosaic:::.createMathFun( sexpr=substitute(expr), ...)
-	f <- fm$fun
+	f <- mosaic::makeFun(expr, ...)
 	x <- seq(min(xlim), max(xlim), length = 1000)
 	# colors
 	trans.blue <- rgb(0,0,1,.1) # least squares rectangle color
@@ -26,12 +25,7 @@ mTaylor <- function(expr, xlim = c(-5, 5), ...){
 	line.red <- rgb(1,0,0,.5) # Taylor line color
 	# Derivatives of function for Taylor Series
 	dd <- list()
-	dd[[1]] <- mosaic:::.d.symbolic(fm)
-	var <- fm$RHS
-	for(k in 2:10){
-		fm$RHS <- c("+", var, fm$RHS)
-		dd[[k]] <- mosaic:::.d.symbolic(fm)
-	}
+  for (k in 1:10) dd[[k]] <- mosaic::symbolicD(expr,...,.order=k)
 
 	myplot <- function(a, TaylorBeTrue, lsquares, xwid, n, err, which.plot){
 		# Taylor Series
